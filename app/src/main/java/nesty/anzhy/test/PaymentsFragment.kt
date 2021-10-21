@@ -18,6 +18,8 @@ import nesty.anzhy.test.models.ResponseItem
 import nesty.anzhy.test.util.Constants
 import nesty.anzhy.test.util.NetworkListener
 import nesty.anzhy.test.util.NetworkResult
+import java.util.*
+import kotlin.collections.HashMap
 
 @AndroidEntryPoint
 class PaymentsFragment : Fragment() {
@@ -72,7 +74,9 @@ class PaymentsFragment : Fragment() {
                 is NetworkResult.Success -> {
                     response.data?.let {
                         Log.e("ApiRequestSuccess", response.data.response.toString())
-                        mAdapter.setData(response.data.response) }
+                        val list:List<ResponseItem> = response.data.response
+                        Collections.sort(list)
+                        mAdapter.setData(list) }
                 }
                 is NetworkResult.Error -> {
                     Toast.makeText(

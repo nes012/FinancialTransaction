@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         navController = findNavController(R.id.nav_host_fragment_activity_main)
-
     }
 
     override fun onSupportNavigateUp(): Boolean {

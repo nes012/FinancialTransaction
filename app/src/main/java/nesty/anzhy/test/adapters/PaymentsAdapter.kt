@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import nesty.anzhy.test.databinding.PaymentsItemLayoutBinding
 import nesty.anzhy.test.models.ResponseItem
+import nesty.anzhy.test.util.convertTimestampToTime
 
 class PaymentsAdapter : RecyclerView.Adapter<PaymentsAdapter.VH>() {
 
@@ -26,6 +27,7 @@ class PaymentsAdapter : RecyclerView.Adapter<PaymentsAdapter.VH>() {
         if(currency.isNullOrEmpty()){
             currency = ""
         }
+        holder.binding.txtDate.text = convertTimestampToTime(data.created.toLong())
         holder.binding.txtAmount.text = amount+" "+ currency
 
     }

@@ -117,7 +117,6 @@ class PaymentsFragment : Fragment() {
 
         builder.setPositiveButton("Log out") { dialog, which ->
             findNavController().navigate(R.id.action_paymentsFragment_to_signInFragment)
-            _binding=null
         }
 
         builder.setNegativeButton("Cancel"){dialog, which ->
@@ -129,5 +128,6 @@ class PaymentsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        Log.d("onDestroy", "DESTROYYYYY")
     }
 }

@@ -42,7 +42,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
                 progressBarSignin.isVisible = true
                 val email = userLoginEtv.text.toString()
                 val password = userPasswordEtv.text.toString()
-                mainViewModel.signInUser(email, password)
+                mainViewModel.signInUser(email, password, this@SignInFragment)
             }
         }
 

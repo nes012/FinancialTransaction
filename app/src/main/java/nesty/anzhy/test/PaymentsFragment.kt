@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.collect
 import nesty.anzhy.test.adapters.PaymentsAdapter
 import nesty.anzhy.test.databinding.FragmentPaymentsBinding
 import nesty.anzhy.test.models.ResponseItem
+import nesty.anzhy.test.util.Constants
 import nesty.anzhy.test.util.NetworkListener
 import nesty.anzhy.test.util.NetworkResult
 
@@ -41,8 +42,9 @@ class PaymentsFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentPaymentsBinding.inflate(inflater, container, false)
 
-        setupRecyclerView()
-        requestApiData()
+        val token:String = arguments?.get("token").toString()
+        Log.e("TOKEN", token)
+
         lifecycleScope.launchWhenStarted {
             networkListener = NetworkListener()
             networkListener.checkNetworkAvailability(requireContext())
@@ -53,15 +55,21 @@ class PaymentsFragment : Fragment() {
                 }
         }
 
+        setupRecyclerView()
+
+        requestApiData(token)
+
         return binding.root
     }
 
-    private fun requestApiData() {
+    private fun requestApiData(token: String) {
+        mainViewModel.getPayments(applyQuery(token))
         mainViewModel.paymentsResponseToken.observe(viewLifecycleOwner, { response ->
             when(response){
                 is NetworkResult.Success -> {
                     response.data?.let {
-                        mAdapter.setData(response.data.response as List<ResponseItem>) }
+                        Log.e("apirequest", response.data.response.toString())
+                        mAdapter.setData(response.data.response) }
                 }
                 is NetworkResult.Error -> {
                     Toast.makeText(
@@ -72,6 +80,14 @@ class PaymentsFragment : Fragment() {
                 }
             }
         })
+    }
+
+    fun applyQuery(searchQuery: String): HashMap<String, String> {
+        val queries: HashMap<String, String> = HashMap()
+
+        queries[Constants.TOKEN] = searchQuery
+
+        return queries
     }
 
     private fun setupRecyclerView() {

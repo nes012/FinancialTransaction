@@ -4,12 +4,14 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.NavHostFragment.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -17,7 +19,6 @@ import kotlinx.coroutines.launch
 import nesty.anzhy.test.data.Repository
 import nesty.anzhy.test.models.LoginResponse
 import nesty.anzhy.test.models.TokenResponse
-import nesty.anzhy.test.util.Constants.Companion.TOKEN
 import nesty.anzhy.test.util.NetworkResult
 import retrofit2.Call
 import retrofit2.Callback
@@ -34,8 +35,6 @@ class MainViewModel @Inject constructor(
 
     private val eventsChannel = Channel<AllEvents>()
     val allEventsFlow = eventsChannel.receiveAsFlow()
-
-    var token = String()
 
     val paymentsResponseToken: MutableLiveData<NetworkResult<TokenResponse>> = MutableLiveData()
 
@@ -93,7 +92,7 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun signInUser(login: String, password: String) = viewModelScope.launch {
+    fun signInUser(login: String, password: String, fragment: Fragment) = viewModelScope.launch {
         when {
             login.isEmpty() -> {
                 eventsChannel.send(AllEvents.ErrorCode(1))
@@ -113,19 +112,22 @@ class MainViewModel @Inject constructor(
                 response: Response<LoginResponse>
             ) {
                 Log.d("responseSuccess", response.toString())
-                token = response.body()?.response?.token.toString()
+                val token = response.body()?.response?.token.toString()
                 Log.d("responseSuccess2", token)
-
+                val bundle = Bundle()
+                bundle.putString("token", token)
+                if(response.body()?.success.equals("true")) {
+                    findNavController(fragment).navigate(
+                        R.id.action_signInFragment_to_paymentsFragment,
+                        bundle
+                    )
+                }
+                else Toast.makeText(getApplication(), "wrong login or password",
+                Toast.LENGTH_SHORT).show()
             }
         })
 
 
-    }
-
-    fun applyQuery(searchQuery: String): HashMap<String, String> {
-        val queries: HashMap<String, String> = HashMap()
-        queries[TOKEN] = searchQuery
-        return queries
     }
 
 

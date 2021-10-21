@@ -21,7 +21,12 @@ class PaymentsAdapter : RecyclerView.Adapter<PaymentsAdapter.VH>() {
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val data = data[position]
-        holder.binding.txtAmount.text = data.amount.toString()+" "+ data.currency
+        var amount = data.amount.toString()
+        var currency = data.currency
+        if(currency.isNullOrEmpty()){
+            currency = ""
+        }
+        holder.binding.txtAmount.text = amount+" "+ currency
 
     }
 

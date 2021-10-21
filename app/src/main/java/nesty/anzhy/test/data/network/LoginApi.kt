@@ -18,6 +18,7 @@ interface LoginApi {
               @Field ("password") password:String): Call<LoginResponse>
 
     @GET("payments")
+    @Headers(APP_KEY_HEADER, VERSION_HEADER)
     suspend fun getPayments(
         @QueryMap queries: Map<String, String>
     ): Response<TokenResponse>

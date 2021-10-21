@@ -15,7 +15,7 @@ class RemoteDataSource @Inject constructor(
         return loginApi.getPayments(queries)
     }
 
-    suspend fun login(login: String, password: String): Call<LoginResponse> {
+    fun login(login: String, password: String): Call<LoginResponse> {
         return loginApi.login(login, password)
     }
 

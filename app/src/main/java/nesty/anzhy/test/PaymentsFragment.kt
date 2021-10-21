@@ -1,14 +1,14 @@
 package nesty.anzhy.test
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -42,8 +42,11 @@ class PaymentsFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentPaymentsBinding.inflate(inflater, container, false)
 
+        setHasOptionsMenu(true)
+
+
         val token:String = arguments?.get("token").toString()
-        Log.e("TOKEN", token)
+        Log.d("TOKEN", token)
 
         lifecycleScope.launchWhenStarted {
             networkListener = NetworkListener()
@@ -68,7 +71,7 @@ class PaymentsFragment : Fragment() {
             when(response){
                 is NetworkResult.Success -> {
                     response.data?.let {
-                        Log.e("apirequest", response.data.response.toString())
+                        Log.e("ApiRequestSuccess", response.data.response.toString())
                         mAdapter.setData(response.data.response) }
                 }
                 is NetworkResult.Error -> {
@@ -95,6 +98,33 @@ class PaymentsFragment : Fragment() {
         binding.recycelerViewPayments.layoutManager = LinearLayoutManager(requireContext())
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.logout_menu, menu)
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.menu_logout) {
+            showAlertDialog()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    fun showAlertDialog(){
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Log out")
+        builder.setMessage("You will be returned to the login screen.")
+
+        builder.setPositiveButton("Log out") { dialog, which ->
+            findNavController().navigate(R.id.action_paymentsFragment_to_signInFragment)
+            _binding=null
+        }
+
+        builder.setNegativeButton("Cancel"){dialog, which ->
+            dialog.cancel()
+        }
+        builder.show()
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

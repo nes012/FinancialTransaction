@@ -9,7 +9,11 @@
         android:id="@+id/paymentsFragment"
         android:name="nesty.anzhy.test.PaymentsFragment"
         android:label="fragment_payments"
-        tools:layout="@layout/fragment_payments" />
+        tools:layout="@layout/fragment_payments" >
+        <action
+            android:id="@+id/action_paymentsFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
     <fragment
         android:id="@+id/signInFragment"
         android:name="nesty.anzhy.test.SignInFragment"

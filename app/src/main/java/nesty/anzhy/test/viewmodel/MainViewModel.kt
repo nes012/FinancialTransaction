@@ -1,4 +1,4 @@
-package nesty.anzhy.test
+package nesty.anzhy.test.viewmodel
 
 import android.app.Application
 import android.content.Context
@@ -16,6 +16,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import nesty.anzhy.test.R
 import nesty.anzhy.test.data.Repository
 import nesty.anzhy.test.models.LoginResponse
 import nesty.anzhy.test.models.TokenResponse

@@ -1,4 +1,4 @@
-package nesty.anzhy.test
+package nesty.anzhy.test.fragments
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -12,6 +12,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import nesty.anzhy.test.viewmodel.MainViewModel
+import nesty.anzhy.test.R
 import nesty.anzhy.test.adapters.PaymentsAdapter
 import nesty.anzhy.test.databinding.FragmentPaymentsBinding
 import nesty.anzhy.test.models.ResponseItem
@@ -105,7 +107,6 @@ class PaymentsFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.logout_menu, menu)
     }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_logout) {

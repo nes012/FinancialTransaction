@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/paymentsFragment"
-        android:name="nesty.anzhy.test.PaymentsFragment"
+        android:name="nesty.anzhy.test.fragments.PaymentsFragment"
         android:label="fragment_payments"
         tools:layout="@layout/fragment_payments" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
-        android:name="nesty.anzhy.test.SignInFragment"
+        android:name="nesty.anzhy.test.fragments.SignInFragment"
         android:label="fragment_sign_in"
         tools:layout="@layout/fragment_sign_in" >
         <action

@@ -1,7 +1,6 @@
-package nesty.anzhy.test
+package nesty.anzhy.test.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +13,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import nesty.anzhy.test.viewmodel.MainViewModel
+import nesty.anzhy.test.R
 import nesty.anzhy.test.databinding.FragmentSignInBinding
 
 @AndroidEntryPoint
